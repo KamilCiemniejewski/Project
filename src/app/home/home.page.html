@@ -7,10 +7,15 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div *ngFor="let w of weatherData?.weather">
+  <ion-input [(ngModel)] = "city" placeholder = "Enter city name"></ion-input>
+  <ion-button expand = "block" (click) = "getWeather()">Click to display weather</ion-button>
+
+  <div *ngIf="weatherData?.weather">
+  <div *ngFor="let w of weatherData.weather">
     <p>{{ w.main }} - {{ w.description }}</p>
   </div>
 
   <!-- Displays current temperature -->
   <p>{{ temperature }} °C</p>
+</div>
 </ion-content>
