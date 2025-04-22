@@ -14,6 +14,7 @@
 <ion-content [fullscreen]="true">
   <ion-input [(ngModel)] = "city" placeholder = "Enter city name"></ion-input>
   <ion-button expand = "block" (click) = "getWeather()">Click to display weather</ion-button>
+  <p *ngIf="weatherData">Your latest searched city: {{ weatherData.name }}</p>
 
   <div *ngIf="weatherData?.weather">
     <h2>Weather in {{ weatherData.name }}</h2>
