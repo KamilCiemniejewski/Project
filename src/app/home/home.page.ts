@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonInput } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonInput, IonButtons, IonToggle, IonLabel } from '@ionic/angular/standalone';
 import { WeatherService } from '../services/weather.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [CommonModule, FormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonInput],
+  imports: [CommonModule, FormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonInput, IonButtons, IonToggle, IonLabel],
 })
 export class HomePage implements OnInit {
 
@@ -28,5 +28,10 @@ temperature: string = "";
       this.weatherData = data;
       this.temperature = data.main.temp.toFixed(2);
     });
+  }
+
+  toggleDarkMode(event: any) {
+    console.log('Dark mode toggled:', event.detail.checked);
+  document.body.classList.toggle('dark', event.detail.checked);
   }
 }

@@ -1,2 +1,17 @@
-// For information on how to create your own theme, please see:
-// http://ionicframework.com/docs/theming/
+body.dark {
+    --ion-background-color: #121212;
+    --ion-text-color: #ffffff;
+  
+    --ion-color-primary: #428cff;
+    --ion-color-secondary: #50c8ff;
+    --ion-color-tertiary: #6a64ff;
+  
+    --ion-toolbar-background: #1f1f1f;
+    --ion-item-background: #1e1e1e;
+
+    ion-input {
+        --background: #ffffff;
+        --color: #000000;
+      }
+  }
+
