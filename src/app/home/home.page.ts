@@ -4,37 +4,47 @@ import { WeatherService } from '../services/weather.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Storage } from '@ionic/storage-angular';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [CommonModule, FormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonInput, IonButtons, IonToggle, IonLabel],
+  imports: [RouterLink, CommonModule, FormsModule, IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonInput, IonButtons, IonToggle, IonLabel],
 })
 export class HomePage implements OnInit {
 
 weatherData: any;
 city: string = "Galway";
 temperature: string = "";
+isCelsius: boolean = true;
 
   constructor(private weatherService:WeatherService, private storage: Storage) {}
   
   async ngOnInit() {
     await this.storage.create();
     const storedCity = await this.storage.get('city');
+    const storedUnit = await this.storage.get('isCelsius');
     if (storedCity) {
       this.city = storedCity;
-      this.getWeather();
     }
+    if (storedUnit !== null) {
+      this.isCelsius = storedUnit;
+    }
+    this.getWeather();
   }
 
   async ionViewWillEnter() {
     await this.storage.create();
     const storedCity = await this.storage.get('city');
+    const storedUnit = await this.storage.get('isCelsius');
     if (storedCity) {
       this.city = storedCity;
-      this.getWeather();
     }
+    if (storedUnit !== null) {
+      this.isCelsius = storedUnit;
+    }
+    this.getWeather();
   }
 
   getWeather(): void {
@@ -43,7 +53,16 @@ temperature: string = "";
     this.weatherService.getWeatherData(this.city).subscribe((data) => {
       this.weatherData = data;
       this.temperature = data.main.temp.toFixed(2);
+      this.updateTemperature(data.main.temp); 
     });
+  }
+
+  updateTemperature(tempInCelsius: number): void {
+    if (this.isCelsius) {
+      this.temperature = tempInCelsius.toFixed(2);
+    } else {
+      this.temperature = (tempInCelsius * 9/5 +32).toFixed(2);
+    }
   }
 
   async saveCity(): Promise<void> {
@@ -51,8 +70,5 @@ temperature: string = "";
     console.log('City saved to storage:', this.city);
   }
 
-  toggleDarkMode(event: any) {
-    console.log('Dark mode toggled:', event.detail.checked);
-  document.body.classList.toggle('dark', event.detail.checked);
-  }
+  
 }

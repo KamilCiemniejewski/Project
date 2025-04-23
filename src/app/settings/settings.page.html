@@ -1,0 +1,26 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+      </ion-buttons>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">settings</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-item>
+    <ion-label>Dark Mode</ion-label>
+    <ion-toggle [(ngModel)]="isDarkMode" (ionChange)="toggleDarkMode($event)"></ion-toggle>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Temperature Unit (°C/°F)</ion-label>
+    <ion-toggle [ngModel]="isCelsius" (ionChange)="toggleTemperatureUnit($event)"></ion-toggle>
+  </ion-item>
+</ion-content>
