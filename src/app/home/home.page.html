@@ -14,7 +14,7 @@
   <p *ngIf="weatherData">Your latest searched city: {{ weatherData.name }}</p>
 
   <div *ngIf="weatherData?.weather">
-    <h2>Weather in {{ weatherData.name }}</h2>
+    <h2>{{ location }}</h2>
   <div *ngFor="let w of weatherData.weather" style="display: flex; align-items: center; gap: 10px;">
     <p>{{ w.main }} - {{ w.description }}</p>
     <img [src]="'https://openweathermap.org/img/wn/' + w.icon + '@2x.png'" alt="Weather icon" style="width: 60px; height: 60px;">
@@ -25,4 +25,6 @@
 </div>
 
 <ion-button [routerLink]="['/settings']">Settings</ion-button>
+<ion-button (click)="getGPS()">Get weather for current location</ion-button>
+{{lat}}, {{long}}
 </ion-content>

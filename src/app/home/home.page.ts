@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Storage } from '@ionic/storage-angular';
 import { RouterLink } from '@angular/router';
+import { Geolocation } from '@capacitor/geolocation';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,11 @@ weatherData: any;
 city: string = "Galway";
 temperature: string = "";
 isCelsius: boolean = true;
+coordinates: any = "";
+lat: string = "";
+long: string = "";
+location: string = "Weather in " + this.city;
+
 
   constructor(private weatherService:WeatherService, private storage: Storage) {}
   
@@ -53,11 +59,13 @@ isCelsius: boolean = true;
     this.weatherService.getWeatherData(this.city).subscribe((data) => {
       this.weatherData = data;
       this.temperature = data.main.temp.toFixed(2);
-      this.updateTemperature(data.main.temp); 
+      this.updateTemperature(data.main.temp);
+      this.location = "Weather in " + this.city; 
     });
   }
 
   updateTemperature(tempInCelsius: number): void {
+    
     if (this.isCelsius) {
       this.temperature = tempInCelsius.toFixed(2);
     } else {
@@ -70,5 +78,20 @@ isCelsius: boolean = true;
     console.log('City saved to storage:', this.city);
   }
 
+  async getGPS() {
+    this.coordinates = await Geolocation.getCurrentPosition();
+    this.lat = this.coordinates.coords.latitude;
+    this.long = this.coordinates.coords.longitude;
+    this.getWeatherGPS();
+  }
+
+  getWeatherGPS(): void {
+    this.weatherService.getWeatherDataByCoords(this.lat, this.long).subscribe((data) => {
+      console.log('Weather in current location is:', data);
+      this.temperature = data.main.temp.toFixed(2);
+      this.city = "";
+      this.location = "Weather based on your location is ";
+    });
+  }
   
 }
