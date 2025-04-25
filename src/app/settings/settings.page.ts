@@ -24,7 +24,7 @@ isCelsius = true;
   loadSettings() {
     const storedUnit = localStorage.getItem('isCelsius');
     if (storedUnit !== null) {
-      this.isCelsius = JSON.parse(storedUnit);  // Set the temperature unit based on stored value
+      this.isCelsius = JSON.parse(storedUnit);  // Set the temperature unit
     }
   }
 
@@ -35,7 +35,7 @@ isCelsius = true;
 
   toggleTemperatureUnit(event: any) {
     this.isCelsius = event.detail.checked;
-    localStorage.setItem('isCelsius', JSON.stringify(this.isCelsius));  // Save the new value in localStorage
+    localStorage.setItem('isCelsius', JSON.stringify(this.isCelsius));  // Save the temperature preference to local storage
     console.log('Temperature unit set to:', this.isCelsius ? 'Celsius' : 'Fahrenheit');
   }
 

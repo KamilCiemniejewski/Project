@@ -11,20 +11,21 @@
 <ion-content [fullscreen]="true">
   <ion-input [(ngModel)] = "city" placeholder = "Enter city name"></ion-input>
   <ion-button expand = "block" (click) = "getWeather()">Click to display weather</ion-button>
+  <ion-button [routerLink]="['/settings']">Settings</ion-button>
+<ion-button (click)="getGPS()">Get weather for current location</ion-button>
   <p *ngIf="weatherData">Your latest searched city: {{ weatherData.name }}</p>
 
   <div *ngIf="weatherData?.weather">
+    <!-- Displays location -->
     <h2>{{ location }}</h2>
   <div *ngFor="let w of weatherData.weather" style="display: flex; align-items: center; gap: 10px;">
+    <!-- Description of the weather -->
     <p>{{ w.main }} - {{ w.description }}</p>
     <img [src]="'https://openweathermap.org/img/wn/' + w.icon + '@2x.png'" alt="Weather icon" style="width: 60px; height: 60px;">
   </div>
 
   <!-- Displays current temperature -->
-  <p style="margin: 0">{{ temperature }} °C</p>
+  <p style="margin: 0">{{ temperature }} °{{ isCelsius ? 'C' : 'F' }}</p>
 </div>
-
-<ion-button [routerLink]="['/settings']">Settings</ion-button>
-<ion-button (click)="getGPS()">Get weather for current location</ion-button>
 {{lat}}, {{long}}
 </ion-content>
